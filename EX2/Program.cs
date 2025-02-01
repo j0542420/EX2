@@ -10,57 +10,59 @@ namespace EX2
     {
         static void Main(string[] args)
         {
-            //declaration
-            int secret = 0;
-            int guess = 0;
-
-            bool winning = false; // flag to reflect the winning condition
-
+            // Declarations
+            int secret;
+            int guess;
             bool playAgain = true;
-            string answerPlayAgain = true;
-
-            //computer generate a random secret number
+            string answerPlayAgain;
 
             Random rnd = new Random();
-            secret = rnd.Next(secret);
 
-            //proccess to play again
-            while (playAgain = true)
+            // Process to play the game repeatedly
+            while (playAgain)
             {
+                secret = rnd.Next(1, 101); // Random number between 1 and 100
+                bool winning = false;      // Reset the winning flag for each new game
 
-                //program will ask user to input a number to guess secret number, until win
-                while (winning == false)
+                Console.WriteLine("Guess the secret number between 1 and 100!");
+
+                // Game loop until the user wins
+                while (!winning)
                 {
-                    Console.WriteLine("What is your guess number");
-                    guess = Convert.ToInt32(Console.ReadLine());
-
-
-                    //if the guessing number is greater than, print the number is too large
-                    if (guess > secret)
+                    Console.Write("Enter your guess: ");
+                    if (int.TryParse(Console.ReadLine(), out guess))
                     {
-                        Console.WriteLine("Number is too large");
+                        if (guess > secret)
+                        {
+                            Console.WriteLine("Your guess is too high.");
+                        }
+                        else if (guess < secret)
+                        {
+                            Console.WriteLine("Your guess is too low.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Congratulations! You guessed the number!");
+                            winning = true; // Player won
+                        }
                     }
-                    //if the guessing number is less than, print out the number is to small
-                    else if (guess < secret)
-                    {
-                        Console.WriteLine("Number is too small");
-                    }
-                    // if the guessing number is secret, you win and exit
                     else
                     {
-                        Console.WriteLine("you have Won!");
-                        winning = true;
+                        Console.WriteLine("Invalid input. Please enter a number.");
                     }
-                    Console.WriteLine("Play again? (Y/N)");
+                }
 
-                    answerPlayAgain = Console.ReadLine();
+                // Asking if the player wants to play again
+                Console.Write("Do you want to play again? (Y/N): ");
+                answerPlayAgain = Console.ReadLine();
 
-
+                if (answerPlayAgain.ToUpper() != "Y")
+                {
+                    playAgain = false; // Exit the main loop
                 }
             }
-            
-            Console.WriteLine("BYE!");
-            Console.ReadLine();
+
+            Console.WriteLine("Thanks for playing! Goodbye!");
         }
     }
 }
